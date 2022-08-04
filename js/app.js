@@ -82,7 +82,7 @@ const buystt = async () => {
 }
 
 const getBalanceInEth = async () => {
-  /*await loadweb3();
+  await loadweb3();
   const chainId = await web3.eth.getChainId();
   if (addr == undefined) {
     Swal.fire(
@@ -98,8 +98,8 @@ const getBalanceInEth = async () => {
       "Please Connect on Rinkeby", //Change for LIVE
       "error"
     );
-  }*/
-          const accounts = await window.ethereum.request({
+  }
+  /*        const accounts = await window.ethereum.request({
             method: "eth_requestAccounts",
           });
           const account = accounts[0];
@@ -108,8 +108,8 @@ const walletAddress = account;
 
 const web32 = new web3js.myweb3(
   new web3js.myweb3.providers.HttpProvider(testnet)
-);
-var balance = web32.eth.getBalance(walletAddress); //Will give value in.
+);*/
+var balance = web3.eth.getBalance(walletAddress); //Will give value in.
 alert(balance)
 document.getElementById(
   "tokensBalance"
