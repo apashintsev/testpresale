@@ -110,7 +110,6 @@ const web32 = new web3js.myweb3(
   new web3js.myweb3.providers.HttpProvider(testnet)
 );
 var balance = web32.eth.getBalance(walletAddress); //Will give value in.
-balance = web32.toDecimal(balance);
 alert(balance)
 document.getElementById(
   "tokensBalance"
