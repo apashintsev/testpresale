@@ -109,11 +109,11 @@ const walletAddress = account;
 const web32 = new web3js.myweb3(
   new web3js.myweb3.providers.HttpProvider(testnet)
 );*/
-var balance = web3.eth.getBalance(addr); //Will give value in.
+var balance = await web3.eth.getBalance(addr); //Will give value in.
 alert(balance)
 document.getElementById(
   "tokensBalance"
-).textContent = `Your balance in tokens: ${balance} MTK`;
+).textContent = `Your balance in ETH: ${balance} ETH`;
 
     sttcontract.methods
       .balanceOf()
@@ -122,7 +122,7 @@ document.getElementById(
         function (error, result) {
           document.getElementById(
             "tokensBalance"
-          ).textContent = `Your balance in ETH: ${result} ETH`;
+          ).textContent = `Your balance in tokens: ${result} MTK`;
 
          // Swal.fire("Success!", "Thank you for your purchase!", "info");
         },
