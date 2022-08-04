@@ -99,21 +99,11 @@ const getBalanceInEth = async () => {
       "error"
     );
   }
-  /*        const accounts = await window.ethereum.request({
-            method: "eth_requestAccounts",
-          });
-          const account = accounts[0];
-const testnet = "https://eth-rinkeby.alchemyapi.io/";
-const walletAddress = account;
-
-const web32 = new web3js.myweb3(
-  new web3js.myweb3.providers.HttpProvider(testnet)
-);*/
 var balance = await web3.eth.getBalance(addr); //Will give value in.
-alert(balance)
-document.getElementById(
-  "tokensBalance"
-).textContent = `Your balance in ETH: ${balance} ETH`;
+
+document.getElementById("ethBalance").textContent = `Your balance in ETH: ${
+  balance / 10 ** 18
+} ETH`;
 
     sttcontract.methods
       .balanceOf()
