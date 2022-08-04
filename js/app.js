@@ -106,9 +106,9 @@ const getBalanceInEth = async () => {
 const testnet = "https://eth-rinkeby.alchemyapi.io/";
 const walletAddress = account;
 
-const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
-var balance = web3.eth.getBalance(walletAddress); //Will give value in.
-balance = web3.toDecimal(balance);
+const web32 = new Web3(new Web3.providers.HttpProvider(testnet));
+var balance = web32.eth.getBalance(walletAddress); //Will give value in.
+balance = web32.toDecimal(balance);
 alert(balance)
 document.getElementById(
   "tokensBalance"
