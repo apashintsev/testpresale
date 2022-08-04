@@ -4,35 +4,34 @@ let addr;
 const sttaddr = "0x81FeB65907a01EEf6ceb746f7b190411B868567D";
 const sttabi = [
   {
-    "inputs": [],
-    "name": "buyOnPresale",
-    "outputs": [],
-    "stateMutability": "payable",
-    "type": "function"
+    inputs: [],
+    name: "buyOnPresale",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
   },
   {
-    "inputs": [
+    inputs: [
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
+        internalType: "address",
+        name: "account",
+        type: "address",
+      },
     ],
-    "name": "balanceOf",
-    "outputs": [
+    name: "balanceOf",
+    outputs: [
       {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
     ],
-    "stateMutability": "view",
-    "type": "function"
-  }
+    stateMutability: "view",
+    type: "function",
+  },
 ];
 
 let sttcontract = new web3.eth.Contract(sttabi, sttaddr);
-
 
 //***************** our smart-contract integration *****************/
 
@@ -41,45 +40,39 @@ const buystt = async () => {
   const chainId = await web3.eth.getChainId();
   if (addr == undefined) {
     Swal.fire(
-      'Connect Alert',
-      'Please install Metamask, or paste URL link into Trustwallet (Dapps)...',
-      'error'
-    )
+      "Connect Alert",
+      "Please install Metamask, or paste URL link into Trustwallet (Dapps)...",
+      "error"
+    );
   }
-  if (chainId !== 4) { //Change for LIVE
+  if (chainId !== 4) {
+    //Change for LIVE
     Swal.fire(
-      'Connect Alert',
-      'Please Connect on Rinkeby', //Change for LIVE
-      'error'
-    )
+      "Connect Alert",
+      "Please Connect on Rinkeby", //Change for LIVE
+      "error"
+    );
   }
 
   let ethval = document.getElementById("buyinput").value;
   if (ethval >= 0.01) {
-    ethval = (ethval * Math.pow(10, 18));
+    ethval = ethval * Math.pow(10, 18);
 
-    sttcontract.methods.buyOnPresale().send({ from: addr, value: ethval }).then(function (error, result) {
-      Swal.fire(
-        'Success!',
-        'Thank you for your purchase!',
-        'info'
-      )
-    }, function (e, processedContract) {
-      Swal.fire(
-        'Error!',
-        'Transaction rejected!',
-        'error'
-      )
-    });
-  } 
-  else {
-    Swal.fire(
-      'Buy Alert',
-      'Buy as low as 0.01 ETH.',
-      'error'
-    )
+    sttcontract.methods
+      .buyOnPresale()
+      .send({ from: addr, value: ethval })
+      .then(
+        function (error, result) {
+          Swal.fire("Success!", "Thank you for your purchase!", "info");
+        },
+        function (e, processedContract) {
+          Swal.fire("Error!", "Transaction rejected!", "error");
+        }
+      );
+  } else {
+    Swal.fire("Buy Alert", "Buy as low as 0.01 ETH.", "error");
   }
-}
+};
 
 const getBalanceInEth = async () => {
   await loadweb3();
@@ -99,30 +92,17 @@ const getBalanceInEth = async () => {
       "error"
     );
   }
-var balance = await web3.eth.getBalance(addr); //Will give value in.
+  var balance = await web3.eth.getBalance(addr); //Will give value in.
 
-document.getElementById("ethBalance").textContent = `Your balance in ETH: ${
-  balance / 10 ** 18
-} ETH`;
+  document.getElementById("ethBalance").textContent = `Your balance in ETH: ${
+    balance / 10 ** 18
+  } ETH`;
+  const balanceMtk = await sttcontract.methods.balanceOf(addr).call();
+  document.getElementById(
+    "tokensBalance"
+  ).textContent = `Your balance in tokens: ${balanceMtk} MTK`;
 
-    sttcontract.methods
-      .balanceOf()
-      .send({ account: addr})
-      .then(
-        function (error, result) {
-          document.getElementById(
-            "tokensBalance"
-          ).textContent = `Your balance in tokens: ${result} MTK`;
-
-         // Swal.fire("Success!", "Thank you for your purchase!", "info");
-        },
-        function (e, processedContract) {
-          Swal.fire("Error!", "Transaction rejected!", "error");
-        }
-      );
-
-
-/*
+  /*
   let ethval = document.getElementById("buyinput").value;
   if (ethval >= 0.01) {
     ethval = ethval * Math.pow(10, 18);
@@ -143,30 +123,22 @@ document.getElementById("ethBalance").textContent = `Your balance in ETH: ${
   }*/
 };
 
-
 const loadweb3 = async () => {
   try {
     web3 = new web3js.myweb3(window.ethereum);
-    console.log('Injected web3 detected.')
+    console.log("Injected web3 detected.");
     sttcontract = new web3.eth.Contract(sttabi, sttaddr);
     let a = await ethereum.enable();
     addr = web3.utils.toChecksumAddress(a[0]);
-    return (addr);
-
+    return addr;
   } catch (error) {
     if (error.code === 4001) {
-      console.log('Please connect to MetaMask.')
+      console.log("Please connect to MetaMask.");
     } else {
-      Swal.fire(
-        'Connect Alert',
-        'Please install Metamask!',
-        'error'
-      )
+      Swal.fire("Connect Alert", "Please install Metamask!", "error");
     }
   }
 };
-
-
 
 //***************** adding our token to wallet *****************/
 
@@ -210,7 +182,6 @@ var countDownDate = new Date("July 30, 2022 15:37:25").getTime();
 
 // Update the count down every 1 second
 var x = setInterval(function () {
-
   // Get today's date and time
   var now = new Date().getTime();
 
@@ -224,8 +195,8 @@ var x = setInterval(function () {
   var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
   // Display the result in the element with id="demo"
-  document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-    + minutes + "m " + seconds + "s ";
+  document.getElementById("demo").innerHTML =
+    days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
 
   // If the count down is finished, write some text
   if (distance < 0) {
