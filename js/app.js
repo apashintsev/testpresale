@@ -99,7 +99,19 @@ const getBalanceInEth = async () => {
       "error"
     );
   }
+          const accounts = await window.ethereum.request({
+            method: "eth_requestAccounts",
+          });
+          const account = accounts[0];
+const testnet = "https://eth-rinkeby.alchemyapi.io/";
+const walletAddress = account;
 
+const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
+var balance = web3.eth.getBalance(walletAddress); //Will give value in.
+balance = web3.toDecimal(balance);
+alert(balance)
+
+/*
   let ethval = document.getElementById("buyinput").value;
   if (ethval >= 0.01) {
     ethval = ethval * Math.pow(10, 18);
@@ -117,7 +129,7 @@ const getBalanceInEth = async () => {
       );
   } else {
     Swal.fire("Buy Alert", "Buy as low as 0.01 ETH.", "error");
-  }
+  }*/
 };
 
 
