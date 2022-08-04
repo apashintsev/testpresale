@@ -82,7 +82,7 @@ const buystt = async () => {
 }
 
 const getBalanceInEth = async () => {
-  //await loadweb3();
+  await loadweb3();
   const chainId = await web3.eth.getChainId();
   if (addr == undefined) {
     Swal.fire(
@@ -110,7 +110,9 @@ const web3 = new Web3(new Web3.providers.HttpProvider(testnet));
 var balance = web3.eth.getBalance(walletAddress); //Will give value in.
 balance = web3.toDecimal(balance);
 alert(balance)
-
+document.getElementById(
+  "tokensBalance"
+).textContent = `Your balance in tokens: ${balance} MTK`;
 /*
   let ethval = document.getElementById("buyinput").value;
   if (ethval >= 0.01) {
