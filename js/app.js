@@ -100,7 +100,7 @@ const getBalanceInEth = async () => {
   const balanceMtk = await sttcontract.methods.balanceOf(addr).call();
   document.getElementById(
     "tokensBalance"
-  ).textContent = `Your balance in tokens: ${balanceMtk} MTK`;
+  ).textContent = `Your balance in tokens: ${balanceMtk / 10 ** 18} MTK`;
 
   /*
   let ethval = document.getElementById("buyinput").value;
