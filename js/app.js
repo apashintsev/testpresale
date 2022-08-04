@@ -82,7 +82,7 @@ const buystt = async () => {
 }
 
 const getBalanceInEth = async () => {
-  await loadweb3();
+  //await loadweb3();
   const chainId = await web3.eth.getChainId();
   if (addr == undefined) {
     Swal.fire(
