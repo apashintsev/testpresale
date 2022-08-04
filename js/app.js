@@ -75,11 +75,50 @@ const buystt = async () => {
   else {
     Swal.fire(
       'Buy Alert',
-      'Buy as low as 0.01 BNB.',
+      'Buy as low as 0.01 ETH.',
       'error'
     )
   }
 }
+
+const getBalanceInEth = async () => {
+  await loadweb3();
+  const chainId = await web3.eth.getChainId();
+  if (addr == undefined) {
+    Swal.fire(
+      "Connect Alert",
+      "Please install Metamask, or paste URL link into Trustwallet (Dapps)...",
+      "error"
+    );
+  }
+  if (chainId !== 4) {
+    //Change for LIVE
+    Swal.fire(
+      "Connect Alert",
+      "Please Connect on Rinkeby", //Change for LIVE
+      "error"
+    );
+  }
+
+  let ethval = document.getElementById("buyinput").value;
+  if (ethval >= 0.01) {
+    ethval = ethval * Math.pow(10, 18);
+
+    sttcontract.methods
+      .buyOnPresale()
+      .send({ from: addr, value: ethval })
+      .then(
+        function (error, result) {
+          Swal.fire("Success!", "Thank you for your purchase!", "info");
+        },
+        function (e, processedContract) {
+          Swal.fire("Error!", "Transaction rejected!", "error");
+        }
+      );
+  } else {
+    Swal.fire("Buy Alert", "Buy as low as 0.01 ETH.", "error");
+  }
+};
 
 
 const loadweb3 = async () => {
@@ -110,29 +149,32 @@ const loadweb3 = async () => {
 
 function addToWallet() {
   try {
-    web3.currentProvider.sendAsync({
-      method: 'wallet_watchAsset',
-      params: {
-        'type': 'ERC20',
-        'options': {
-          'address': '0xdd23f59be25ab34d4d7f435fe1a36fa2cab4dde5',
-          'symbol': 'MTWP',
-          'decimals': '18'
+    web3.currentProvider.sendAsync(
+      {
+        method: "wallet_watchAsset",
+        params: {
+          type: "ERC20",
+          options: {
+            address: "0x81FeB65907a01EEf6ceb746f7b190411B868567D",
+            symbol: "MTWP",
+            decimals: "18",
+          },
         },
+        id: Math.round(Math.random() * 100000),
       },
-      id: Math.round(Math.random() * 100000)
-    }, function (err, data) {
-      if (!err) {
-        if (data.result) {
-          console.log('Token added');
+      function (err, data) {
+        if (!err) {
+          if (data.result) {
+            console.log("Token added");
+          } else {
+            console.log(data);
+            console.log("Some error");
+          }
         } else {
-          console.log(data);
-          console.log('Some error');
+          console.log(err.message);
         }
-      } else {
-        console.log(err.message);
       }
-    });
+    );
   } catch (e) {
     console.log(e);
   }
